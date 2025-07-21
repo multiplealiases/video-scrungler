@@ -53,13 +53,7 @@ is not usually accurate enough.
 
 Right-click on a video
 and it should appear in the context menu as "Transcode video for web",
-with sub-menus
-
-* "to 10 MB"
-
-* "to 50 MB"
-
-* "to 100 MB"
+with sub-menus denoting the target file size.
 
 ## Dependencies
 
@@ -106,6 +100,10 @@ positive integer value, denoted in binary megabytes.
 The service menu does not display progress nor
 display any indication that it is working,
 and I'm not sure how best to solve it.
+
+I also had to lie a bit and write "99 MB" in the submenu
+even though it actually runs a file size target of 100 MB.
+This is because service submenus are sorted ASCIIbetically.
 
 [^1]: Specifically `yuv420p` High Profile H.264 video/AAC audio
       contained in MP4 with `-movflags faststart`.
