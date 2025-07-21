@@ -100,5 +100,9 @@ target file sizes of 10 MiB, 50 MiB, and 100 MiB,
 the script itself will accept any
 positive integer value, denoted in binary megabytes.
 
-[^1]: (specifically `yuv420p` High Profile H.264 video/AAC audio
-      contained in MP4 with `-movflags faststart`)
+The service menu does not display progress nor
+display any indication that it is working,
+and I'm not sure how best to solve it.
+
+[^1]: Specifically `yuv420p` High Profile H.264 video/AAC audio
+      contained in MP4 with `-movflags faststart`.
