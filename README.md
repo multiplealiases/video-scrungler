@@ -95,9 +95,12 @@ For KDE Plasma users, consider
 Generically, use [yt-dlp](https://github.com/yt-dlp/yt-dlp/)
 or [https://cobalt.tools/](cobalt.tools).
 
-While the Dolphin service menu only has options for
-target file sizes of 10 MiB, 50 MiB, and 100 MiB,
-the script itself will accept any
+The Dolphin service menu only has options for
+target file sizes of 10 MiB, 50 MiB, and 100 MiB.
+I believe this should be fine,
+as it reflects typical upload limits for video files
+on instant messaging services.
+The script itself will accept any
 positive integer value, denoted in binary megabytes.
 
 The service menu does not display progress nor
