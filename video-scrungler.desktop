@@ -1,0 +1,17 @@
+[Desktop Entry]
+Type=Service
+MimeType=video/*;
+X-KDE-Submenu=Transcode video for web
+Actions=transcode10M;transcode50M;transcode100M
+
+[Desktop Action transcode10M]
+Name=10 MB
+Exec=video-scrungler 10 %u
+
+[Desktop Action transcode50M]
+Name=50 MB
+Exec=video-scrungler 50 %u
+
+[Desktop Action transcode100M]
+Name=100 MB
+Exec=video-scrungler 100 %u

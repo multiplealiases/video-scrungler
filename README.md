@@ -41,7 +41,7 @@ is not usually accurate enough.
 ### KDE service menu
 
 Right-click on a video
-and it should appear in the context menu as "Transcode video",
+and it should appear in the context menu as "Transcode video for web",
 with sub-menus
 
 * "to 10 MB"
