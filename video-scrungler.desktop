@@ -6,12 +6,15 @@ Actions=transcode10M;transcode50M;transcode100M
 
 [Desktop Action transcode10M]
 Name=10 MB
-Exec=video-scrungler 10 %u
+Icon=tools-rip-video-dvd
+Exec=video-scrungler 10 %f
 
 [Desktop Action transcode50M]
 Name=50 MB
-Exec=video-scrungler 50 %u
+Icon=tools-rip-video-dvd
+Exec=video-scrungler 50 %f
 
 [Desktop Action transcode100M]
-Name=100 MB
-Exec=video-scrungler 100 %u
+Name=99 MB
+Icon=tools-rip-video-dvd
+Exec=video-scrungler 100 %f
