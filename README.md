@@ -9,15 +9,26 @@ on instant messaging apps such as Discord, Slack, or Teams.
 ## Installation
 
 Copy the file `video-scrungler` to somewhere in PATH;
-`$HOME/.local/bin` is likely a good place.
+`$HOME/.local/bin` is likely usable.
 
 If you intend to use the Dolphin service menu entry,
 *also* copy the file `video-scrungler.desktop`
 to somewhere in the KDE Plasma service menu path;
-`$HOME/.local/share/kio/servicemenus` is a good place to put it.
+`$HOME/.local/share/kio/servicemenus` will probably work.
 Make the directory if it doesn't already exist.
 
 Both files must be marked executable.
+
+It is possible that KDE Plasma will say that it can't find
+`video-scrungler` when you go to run it from the service menu entry.
+Either place `video-scrungler` at `/usr/local/bin`, or
+write this script to
+`$HOME/.config/plasma-workspace/env/path-local-bin.sh`
+and restart the Plasma session:
+
+```
+export PATH=$HOME/.local/bin:$PATH
+```
 
 ## Usage
 
