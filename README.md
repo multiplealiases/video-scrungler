@@ -55,7 +55,7 @@ with sub-menus
 ### Script
 
 * A POSIX `sh` shell and common tools.
-  The following environments have been tested to work correctly:
+  The following environments should work (file an issue if it doesn't):
 
     * GNU/Linux (Bash/coreutils)
 
