@@ -1,0 +1,102 @@
+#!/usr/bin/env sh
+
+set -o errexit
+set -o nounset
+
+# video-scrungler: transcode videos to a Web-safe format at a file size target
+
+# SPDX-License-Identifier: MIT
+
+# Copyright (c) 2025 multiplealiases
+#
+# Permission is hereby granted, free of charge, to any person obtaining
+# a copy of this software and associated documentation files (the
+# “Software”), to deal in the Software without restriction, including
+# without limitation the rights to use, copy, modify, merge, publish,
+# distribute, sublicense, and/or sell copies of the Software, and to
+# permit persons to whom the Software is furnished to do so, subject to
+# the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND,
+# EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+# NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+# DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+# OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR
+# THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+banner() {
+    echo transcode videos to a Web-safe format at a file size target
+}
+
+usage() {
+    echo Usage: video-scrungler [video size in MiB] [video file]
+}
+
+die() {
+        # shellcheck disable=SC2059
+        printf "$@"
+        exit 1
+}
+
+info() {
+    1>&2 printf '>>> %s\n' "$1"
+}
+
+cleanup() {
+    rm -r "$tmpdir"
+}
+
+if [ "$1" = '-h' ] || [ "$1" = '--help' ]
+then
+    cat << EOF
+$(banner)
+$(usage)
+EOF
+    exit
+fi
+
+if [ $# -ne 2 ]
+then
+    die 'error: got %s arguments, expected 2\ntry -h for help\n' "$#"
+fi
+
+here="$(realpath .)"
+size="$1"
+filepath="$2"
+audio_bitrate=128
+
+filename="$(basename "${filepath}")"
+base_filename="${filename%.*}"
+output_filename="${base_filename}"-"${size}"MiB.mp4
+
+# ripped straight from https://superuser.com/a/945604
+float_length="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filepath}")"
+length="${float_length%.*}"
+
+# underestimate the target bitrate by 2%
+# so that the output file is more likely to be below the file size limit.
+# size is given in bytes, but we need bits.
+target_bitrate="$(( ((8 * 1000 * size) / length) - audio_bitrate ))"
+
+tmpdir="$(mktemp -d)"
+trap 'cleanup' INT TERM EXIT
+
+cd "${tmpdir}"
+
+# The video filter is adapted from https://stackoverflow.com/a/54064036
+info 'encoding pass 1'
+ffmpeg -i "$filepath" -loglevel error -hide_banner \
+    -pass 1 -f null \
+    -c:v libx264 -b:v "${target_bitrate}"k -pix_fmt yuv420p \
+    -vf "scale='if(gte(ih, iw), min(720, iw), -4)':'if(lt(ih, iw), min(720, ih), -4)';" AAA
+
+info 'encoding pass 2 to %s' "${output_filename}"
+ffmpeg -i "$filepath" -loglevel error -hide_banner \
+    -pass 2 -c:v libx264 -b:v "${target_bitrate}"k -preset slow -pix_fmt yuv420p \
+    -vf "scale='if(gte(ih, iw), min(720, iw), -4)':'if(lt(ih, iw), min(720, ih), -4)';" \
+    -c:a aac -b:a "${audio_bitrate}"k \
+    -movflags faststart -y "${here}"/"${output_filename}"
