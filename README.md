@@ -27,7 +27,7 @@ write this script to
 and restart the Plasma session:
 
 ```
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$PATH:$HOME/.local/bin
 ```
 
 ## Usage
