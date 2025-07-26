@@ -1,3 +1,9 @@
+# This file is part of the video-scrungler project
+# at https://github.com/multiplealiases/video-scrungler
+
+# Copyright (c) 2025 multiplealiases
+# SPDX-License-Identifier: MIT
+
 [Desktop Entry]
 Type=Service
 MimeType=video/*;
