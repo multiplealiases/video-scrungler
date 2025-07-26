@@ -42,10 +42,6 @@ die() {
         exit 1
 }
 
-cleanup() {
-    rm -r "$tmpdir"
-}
-
 if [ "$1" = '-h' ] || [ "$1" = '--help' ]
 then
     cat << EOF
@@ -60,7 +56,6 @@ then
     die 'error: got %s arguments, expected 2\ntry -h for help\n' "$#"
 fi
 
-here="$(realpath .)"
 size="$1"
 filepath="$(realpath "$2")"
 audio_bitrate=128
@@ -95,15 +90,10 @@ length="${float_length%.*}"
 # size is given in bytes, but we need bits.
 target_bitrate="$(( ((8 * 1000 * size) / length) - audio_bitrate ))"
 
-tmpdir="$(mktemp -d)"
-trap 'cleanup' INT TERM EXIT
-
-cd "${tmpdir}"
-
 # The video filter is adapted from https://stackoverflow.com/a/54064036
 1>&2 printf '>>> encoding to %s\n' "${output_filename}"
 ffmpeg -i "$filepath" -hide_banner -loglevel error \
     -threads 16 -c:v libsvtav1 -b:v "${target_bitrate}"k -preset 8 -pix_fmt yuv420p10le \
     -vf "${convert_levels}scale='if(gte(ih, iw), min(720, iw), -4)':'if(lt(ih, iw), min(720, ih), -4)';" \
     -c:a libopus -b:a "${audio_bitrate}"k \
-    -movflags +faststart -y "${here}"/"${output_filename}"
+    -movflags +faststart -y "${output_filename}"
