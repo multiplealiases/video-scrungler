@@ -67,9 +67,25 @@ output_filename="${base_filename}"-"${size}"MiB-av1.mp4
 # ripped straight from https://superuser.com/a/945604
 float_length="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filepath}")"
 length="${float_length%.*}"
-# overestimate the length by 5 seconds
+# overestimate the length by 1 second
 # to undershoot rather than overshoot the limit
-length="$(( length + 5 ))"
+# and prevent divide-by-zero errors
+
+# including the later constant 2.4% underestimate,
+# this causes a bitrate undershoot of:
+# 52  % for   1 second
+# 27  % for   3 seconds
+# 19  % for   5 seconds
+# 12  % for  10 seconds
+#  5.5% for  30 seconds
+#  4.0% for  60 seconds
+#  3.2% for 120 seconds
+#  2.9% for 180 seconds
+# This is necessary because rate control
+# gets less accurate the shorter the video.
+# This choice may appall the precision-minded among you, but
+# if 'if's and 'but's were candy and nuts, we'd all have a merry Christmas.
+length="$(( length + 1 ))"
 
 # we need to check if a 'j' (JPEG/full levels, 0-255) pixel format is in use
 # and expand its range by a studio (16-235) -> full (0-255) conversion.
