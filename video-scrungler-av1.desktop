@@ -1,0 +1,20 @@
+[Desktop Entry]
+Type=Service
+MimeType=video/*;
+X-KDE-Submenu=Transcode video for web (AV1)
+Actions=transcode10M;transcode50M;transcode100M
+
+[Desktop Action transcode10M]
+Name=10 MB
+Icon=tools-rip-video-dvd
+Exec=video-scrungler-av1 10 %f
+
+[Desktop Action transcode50M]
+Name=50 MB
+Icon=tools-rip-video-dvd
+Exec=video-scrungler-av1 50 %f
+
+[Desktop Action transcode100M]
+Name=99 MB
+Icon=tools-rip-video-dvd
+Exec=video-scrungler-av1 100 %f
