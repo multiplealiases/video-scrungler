@@ -73,7 +73,7 @@ with sub-menus denoting the target file size.
 
     * Chimera Linux (FreeBSD userland)
 
-* FFmpeg
+* FFmpeg 7.x (4.x compatibility is planned)
 
 ### Dolphin service menu entry
 
