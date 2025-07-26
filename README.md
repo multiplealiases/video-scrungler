@@ -73,7 +73,14 @@ with sub-menus denoting the target file size.
 
     * Chimera Linux (FreeBSD userland)
 
-* FFmpeg 4.4.6+
+* FFmpeg 4.4.6+ with
+
+    * `libx264` and `aac` for `video-scrungler`, or
+
+    * `libsvtav1` and `libopus` for `video-scrungler-av1`
+
+    * (and decoders and demuxers for your input files,
+       which I'd hope your FFmpeg has.)
 
 ### Dolphin service menu entry
 
