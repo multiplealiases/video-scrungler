@@ -76,6 +76,9 @@ output_filename="${base_filename}"-"${size}"MiB.mp4
 # ripped straight from https://superuser.com/a/945604
 float_length="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filepath}")"
 length="${float_length%.*}"
+# overestimate the length by 5 seconds
+# to undershoot rather than undershoot the limit
+length="$(( length + 5 ))"
 
 # underestimate the target bitrate by 2%
 # so that the output file is more likely to be below the file size limit.
