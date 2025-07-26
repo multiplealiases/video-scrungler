@@ -96,7 +96,7 @@ ffmpeg -i "$filepath" -loglevel error -hide_banner \
 
 1>&2 printf '>>> encoding pass 2 to %s\n' "${output_filename}"
 ffmpeg -i "$filepath" -loglevel error -hide_banner \
-    -pass 2 -c:v libx264 -b:v "${target_bitrate}"k -preset slow -pix_fmt yuv420p \
+    -pass 2 -c:v libx264 -b:v "${target_bitrate}"k -preset medium -pix_fmt yuv420p \
     -vf "scale='if(gte(ih, iw), min(720, iw), -4)':'if(lt(ih, iw), min(720, ih), -4)';" \
     -c:a aac -b:a "${audio_bitrate}"k \
     -movflags faststart -y "${here}"/"${output_filename}"
