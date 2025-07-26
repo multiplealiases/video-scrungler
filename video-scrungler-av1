@@ -110,9 +110,19 @@ esac
 target_bitrate="$(( ((8 * 1000 * size) / length) - audio_bitrate ))"
 
 # The video filter is adapted from https://stackoverflow.com/a/54064036
+# compat notes:
+#
+# -rc vbr is ignored in newer FFmpeg versions,
+# but is required for FFmpeg 4.4.x to not error out.
+#
+# Also, filtergraphs in 4.4.x cannot end in a ; or ,
+# because the parser interprets this as "another statement follows this",
+# unconditionally, even if the 'next statement' is the empty string or EOF.
+# This yields the cryptic error
+#     No such filter: ''
 1>&2 printf '>>> encoding to %s\n' "${output_filename}"
 ffmpeg -i "$filepath" -hide_banner -loglevel error \
-    -threads 16 -c:v libsvtav1 -b:v "${target_bitrate}"k -preset 8 -pix_fmt yuv420p10le \
-    -vf "${convert_levels}scale='if(gte(ih, iw), min(720, iw), -4)':'if(lt(ih, iw), min(720, ih), -4)';" \
+    -threads 16 -c:v libsvtav1 -b:v "${target_bitrate}"k -preset 8 -pix_fmt yuv420p10le -rc vbr \
+    -vf "${convert_levels}scale='if(gte(ih, iw), min(720, iw), -4)':'if(lt(ih, iw), min(720, ih), -4)'" \
     -c:a libopus -b:a "${audio_bitrate}"k \
     -movflags +faststart -y "${output_filename}"
