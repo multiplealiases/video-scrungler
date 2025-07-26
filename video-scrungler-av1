@@ -66,6 +66,7 @@ output_filename="${base_filename}"-"${size}"MiB-av1.mp4
 
 # ripped straight from https://superuser.com/a/945604
 float_length="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filepath}")"
+length="${float_length%.*}"
 
 # we need to check if a 'j' (JPEG/full levels, 0-255) pixel format is in use
 # and expand its range by a studio (16-235) -> full (0-255) conversion.
@@ -83,7 +84,6 @@ case "$pix_fmt" in
     convert_levels=''
     ;;
 esac
-length="${float_length%.*}"
 
 # underestimate the target bitrate by 2%
 # so that the output file is more likely to be below the file size limit.
