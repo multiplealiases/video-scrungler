@@ -6,7 +6,7 @@ This is useful for quick-and-dirty transcodes of social media video posts
 that refuse to embed/preview/unfurl
 on instant messaging apps such as Discord, Slack, or Teams.
 
-Also available in AV1 flavor!
+Also available in 10-bit AV1[^2] flavor!
 You'll want the scripts `video-scrungler-av1`
 and the servicemenu `video-scrungler-av1.desktop`.
 Install and usage are identical to the H.264 counterpart.
@@ -112,3 +112,8 @@ This is because service submenus are sorted ASCIIbetically.
 
 [^1]: Specifically `yuv420p` High Profile H.264 video/AAC audio
       contained in MP4 with `-movflags faststart`.
+
+[^2]: `yuv420p10le` AV1 video/Opus audio,
+      contained in MP4 with `-movflags faststart`.
+      To my knowledge, this is compatible with the recent
+      (as of this writing) Discord update that added AV1 video embed support.
