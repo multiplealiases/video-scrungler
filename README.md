@@ -6,7 +6,7 @@ This is useful for quick-and-dirty transcodes of social media video posts
 that refuse to embed/preview/unfurl
 on instant messaging apps such as Discord, Slack, or Teams.
 
-Now with AV1 variants!
+Also available in AV1 flavor!
 You'll want the scripts `video-scrungler-av1`
 and the servicemenu `video-scrungler-av1.desktop`.
 Install and usage are identical to the H.264 counterpart.
