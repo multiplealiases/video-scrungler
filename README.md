@@ -99,7 +99,7 @@ Obtaining a video file for this script to work with is out-of-scope.
 For KDE Plasma users, consider
 [Download with yt-dlp here](https://store.kde.org/p/2012539/).
 Generically, use [yt-dlp](https://github.com/yt-dlp/yt-dlp/)
-or [https://cobalt.tools/](cobalt.tools).
+or [cobalt.tools](https://cobalt.tools).
 
 The Dolphin service menu only has options for
 target file sizes of 10 MiB, 50 MiB, and 100 MiB.
