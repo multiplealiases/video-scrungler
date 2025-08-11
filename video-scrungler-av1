@@ -71,16 +71,16 @@ length="${float_length%.*}"
 # to undershoot rather than overshoot the limit
 # and prevent divide-by-zero errors
 
-# including the later constant 2.4% underestimate,
+# including the later constant 5% underestimate,
 # this causes a bitrate undershoot of:
 # 52  % for   1 second
-# 27  % for   3 seconds
-# 19  % for   5 seconds
-# 12  % for  10 seconds
-#  5.5% for  30 seconds
-#  4.0% for  60 seconds
-#  3.2% for 120 seconds
-#  2.9% for 180 seconds
+# 29  % for   3 seconds
+# 21  % for   5 seconds
+# 14  % for  10 seconds
+#  8.1% for  30 seconds
+#  6.6% for  60 seconds
+#  5.8% for 120 seconds
+#  5.6% for 180 seconds
 # This is necessary because rate control
 # gets less accurate the shorter the video.
 # This choice may appall the precision-minded among you, but
@@ -104,10 +104,10 @@ case "$pix_fmt" in
     ;;
 esac
 
-# underestimate the target bitrate by 2%
+# underestimate the target bitrate by 5%
 # so that the output file is more likely to be below the file size limit.
 # size is given in bytes, but we need bits.
-target_bitrate="$(( ((8 * 1000 * size) / length) - audio_bitrate ))"
+target_bitrate="$(( ((8 * 972 * size) / length) - audio_bitrate ))"
 
 # The video filter is adapted from https://stackoverflow.com/a/54064036
 # compat notes:
