@@ -86,6 +86,16 @@ with sub-menus denoting the target file size.
 
 * KDE Plasma 6 (I have no idea whether it works with 5)
 
+## Maximum video length to reach bitrate (by target file size)
+
+|                | 10 MiB | 50 MiB | 100 MiB |
+|----------------|--------|--------|---------|
+| 5 Mbit/s       | 10 sec | 1 min  | 3 min   |
+| 3 Mbit/s       | 30 sec | 2 min  | 4 min   |
+| 1 Mbit/s       | 1 min  | 5 min  | 10 min  |
+| 500 kbit/s[^3] | 2 min  | 10 min | 20 min  |
+| 200 kbit/s[^4] | 3 min  | 15 min | 35 min  |
+
 ## Limitations
 
 This script is not magic.
@@ -124,3 +134,9 @@ This is because service submenus are sorted ASCIIbetically.
       contained in MP4 with `-movflags faststart`.
       To my knowledge, this is compatible with the recent
       (as of this writing) Discord update that added AV1 video embed support.
+
+[^3]: H.264 (`video-scrungler`) will look awful at this bitrate.
+      Consider AV1 (`video-scrungler-av1`).
+
+[^4]: FFmpeg (or more accurately the video encoder being driven by FFmpeg)
+      has trouble reliably meeting 200 kbit/s VBR. Your mileage may vary.
